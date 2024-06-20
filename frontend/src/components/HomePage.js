@@ -1,34 +1,33 @@
 // Display Approved Jobs on Homepage
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { fetchApprovedJobs } from '../api';
 
 const HomePage = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    const fetchApprovedJobs = async () => {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/jobs/approved`);
-      setJobs(response.data);
+    const getJobs = async () => {
+      try {
+        const data = await fetchApprovedJobs();
+        setJobs(data);
+      } catch (error) {
+        console.error('Failed to fetch jobs:', error);
+      }
     };
 
-    fetchApprovedJobs();
+    getJobs();
   }, []);
 
   return (
     <div>
-      <h1>Job Listings</h1>
+      <h1>Approved Jobs</h1>
       <ul>
         {jobs.map(job => (
           <li key={job._id}>
-            <h2>{job.jobName}</h2>
-            <p>{job.companyName}</p>
-            <p>{job.jobType}</p>
-            <p>{job.jobDetails}</p>
+            <h2>{job.title}</h2>
+            <p>{job.description}</p>
             <p>{job.location}</p>
-            <p>{job.salary}</p>
-            <p>{job.commencementDate}</p>
-            <a href={job.applyLink}>Apply</a>
           </li>
         ))}
       </ul>
@@ -37,3 +36,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
