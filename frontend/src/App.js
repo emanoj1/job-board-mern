@@ -1,7 +1,7 @@
 // Main Application Component
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import JobForm from './components/JobForm';
 import HomePage from './components/HomePage';
 import AdminPanel from './components/AdminPanel';
@@ -11,15 +11,15 @@ function App() {
     <Router>
       <div>
         <nav>
-          <a href="/">Home</a>
-          <a href="/submit">Submit Job</a>
-          <a href="/admin">Admin Panel</a>
+          <Link to="/">Home</Link>
+          <Link to="/submit">Submit Job</Link>
+          <Link to="/admin">Admin Panel</Link>
         </nav>
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/submit" component={JobForm} />
-          <Route path="/admin" component={AdminPanel} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/submit" element={<JobForm />} />
+          <Route path="/admin" element={<AdminPanel />} />
+        </Routes>
       </div>
     </Router>
   );
